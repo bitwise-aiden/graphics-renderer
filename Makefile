@@ -1,6 +1,5 @@
 build:
-	mkdir build
-	gcc -Wall -std=c99 ./src/*.c -lSDL2 -o ./build/renderer
+	mkdir build && gcc -Wall -std=c99 ./src/*.c -lSDL2 -o ./build/renderer
 
 run:
 	./build/renderer
