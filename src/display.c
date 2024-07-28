@@ -48,7 +48,7 @@ bool initialize_window(void) {
 
 
 void draw_pixel(int x, int y, uint32_t color) {
-    if (x < window_width && y < window_width) {
+    if (x >= 0 && x < window_width && y >= 0 && y < window_width) {
         color_buffer[y * window_width + x] = color;
     }
 }
@@ -66,16 +66,24 @@ void draw_grid(void) {
 }
 
 void draw_rect(int x, int y, int width, int height, uint32_t color) {
-    for (int dx = x; dx < x + width; ++dx) {
-        color_buffer[y * window_width + dx] = color;
-        color_buffer[(y + height) * window_width + dx] = color;
-    }
-
-    for (int dy = y; dy < y + height; ++dy) {
-        color_buffer[dy * window_width + x] = color;
-        color_buffer[dy * window_width + (x + width)] = color;
+    for (int dx = 0; dx < width; ++dx) {
+        for (int dy = 0; dy < height; ++dy) {
+            draw_pixel(x + dx, y + dy, color);
+        }
     }
 }
+
+// void draw_rect(int x, int y, int width, int height, uint32_t color) {
+//     for (int dx = x; dx < x + width; ++dx) {
+//         color_buffer[y * window_width + dx] = color;
+//         color_buffer[(y + height) * window_width + dx] = color;
+//     }
+
+//     for (int dy = y; dy < y + height; ++dy) {
+//         color_buffer[dy * window_width + x] = color;
+//         color_buffer[dy * window_width + (x + width)] = color;
+//     }
+// }
 
 void render_color_buffer(void) {
     SDL_UpdateTexture(
